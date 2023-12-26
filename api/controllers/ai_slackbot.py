@@ -86,8 +86,11 @@ def print_messages_from_thread(thread_id):
 #     # {"type": "code_interpreter"}
 #     ]
 # )
-assistant_id = "asst_pnlBriOnH1QKrcT6yigalxJW"
-thread_id ="thread_jiZvg8hZkBUwhPK2OBxmssxk"
+# assistant_id = "asst_pnlBriOnH1QKrcT6yigalxJW"
+# thread_id ="thread_jiZvg8hZkBUwhPK2OBxmssxk"
+
+assistant_id = "asst_4J2PUh36zMLWDlSJzv2i9fTe"
+thread_id ="thread_ovXPaL58Kr6K75UQP0HtFNvx"
 # print(Fore.LIGHTGREEN_EX+f"Assistant ID: {assistant_id}")
 
 # # Create a thread
