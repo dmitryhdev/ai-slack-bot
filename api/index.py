@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request, Depends
 from fastapi.responses import HTMLResponse, PlainTextResponse
-from fastapi_slack import SlashCommand, router
+# from fastapi_slack import SlashCommand, router
 # from freshbooks import Client
 # from api.setup import setup_controller
 # from api.schema import WebhookVerify
@@ -15,10 +15,10 @@ import time
 
 app = FastAPI()
 @app.post("/api/ai_response", response_class=PlainTextResponse)
-async def verify_hook(slash_command: SlashCommand = Depends()):
-# async def verify_hook(message: SlackMessage):
+# async def verify_hook(slash_command: SlashCommand = Depends()):
+async def verify_hook(message: SlackMessage):
     # data = parse_qs(req.body())
-    text = slash_command.text
+    text = message.text
     return ai_response(text)
 
 
