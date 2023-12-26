@@ -1,10 +1,11 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, PlainTextResponse
 # from freshbooks import Client
 from api.setup import setup_controller
 from api.schema import WebhookVerify
 from api.verifycode import verify_controller, webhook_verify
 from api.config import settings
+from controllers.ai_slackbot import ai_response
 import urllib.parse
 
 import time
@@ -83,4 +84,6 @@ async def verify_hook(req: Request):
     return await webhook_verify(req)
 
 
-
+@app.post("/api/ai_response", response_class=PlainTextResponse)
+async def verify_hook(req: Request):
+    return ai_response("")
