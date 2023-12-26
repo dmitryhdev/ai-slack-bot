@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request, Depends, BackgroundTasks
 from fastapi.responses import HTMLResponse, PlainTextResponse
 # from fastapi_slack import SlashCommand, router
 # from freshbooks import Client
@@ -10,16 +10,40 @@ from api.controllers.ai_slackbot import ai_response
 import urllib.parse
 from urllib.parse import parse_qs
 from api.models.slack import SlackMessage
+import requests
 import time
-
+import json
 
 app = FastAPI()
+
+def send_second_res(url, msg):
+    payload = {
+        "text": ai_response(msg)
+    }
+
+    # Convert the payload to JSON format
+    payload_json = json.dumps(payload)
+
+    # Send a POST request to the response_url with the payload
+    response = requests.post(url, data=payload_json)
+
+
 @app.post("/api/ai_response", response_class=PlainTextResponse)
 # async def verify_hook(slash_command: SlashCommand = Depends()):
-async def verify_hook(message: SlackMessage):
+async def verify_hook(req: Request, background_tasks: BackgroundTasks):
+    s =await req.body()
+    s= urllib.parse.unquote(s)
+    d = urllib.parse.parse_qs(s)
+    d = {k: v[0] for k, v in d.items()}
+    print(d)
+    response_url = d["response_url"]
+    background_tasks.add_task(send_second_res, response_url, d["text"])
+    return "thinking...."
+    
     # data = parse_qs(req.body())
-    text = message.text
-    return ai_response(text)
+    # text = message.text
+    # return  ai_response(d["text"])
+    # return d["text"]
 
 
 # import requests
