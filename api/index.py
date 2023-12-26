@@ -1,14 +1,21 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, PlainTextResponse
 # from freshbooks import Client
-from api.setup import setup_controller
-from api.schema import WebhookVerify
-from api.verifycode import verify_controller, webhook_verify
-from api.config import settings
+# from api.setup import setup_controller
+# from api.schema import WebhookVerify
+# from api.verifycode import verify_controller, webhook_verify
+# from api.config import settings
 from controllers.ai_slackbot import ai_response
 import urllib.parse
 
 import time
+
+
+app = FastAPI()
+@app.post("/api/ai_response", response_class=PlainTextResponse)
+async def verify_hook(req: Request):
+    return ai_response("")
+
 
 # import requests
 
@@ -24,7 +31,7 @@ import time
 # print(f"Go to this URL to authorize: {authorization_url}")
 # token_response = freshBooksClient.get_access_token("528902786626d712291a8c2aabde6fbbd1bbfb451d2e95a6efaaafff9fd281fe")
 # print(token_response)
-app = FastAPI()
+
 
 # # Define your FreshBooks API token and base URL
 # token = "d1f7dde5535261316bc53570e3d02db06cbb0821c8c2814f9cb884beaa4382fb"
@@ -65,25 +72,22 @@ app = FastAPI()
 #     print(f"An error occurred: {response.status_code}")
 
 #     print(freshBooksClient)
-@app.get("/api/python", response_class=HTMLResponse)
-def hello_world():
-    return "<html><button>ddd123 {}</button></html>".format(settings.redis_db)
+# @app.get("/api/python", response_class=HTMLResponse)
+# def hello_world():
+#     return "<html><button>ddd123 {}</button></html>".format(settings.redis_db)
 
-@app.get("/api/set-up", response_class=HTMLResponse)
-def set_up():
-    return setup_controller()
-
-
-@app.get("/api/verify", response_class=HTMLResponse)
-def verify(code: str):
-    return verify_controller(code)
+# @app.get("/api/set-up", response_class=HTMLResponse)
+# def set_up():
+#     return setup_controller()
 
 
-@app.post("/api/webhook", response_class=HTMLResponse)
-async def verify_hook(req: Request):
-    return await webhook_verify(req)
+# @app.get("/api/verify", response_class=HTMLResponse)
+# def verify(code: str):
+#     return verify_controller(code)
 
 
-@app.post("/api/ai_response", response_class=PlainTextResponse)
-async def verify_hook(req: Request):
-    return ai_response("")
+# @app.post("/api/webhook", response_class=HTMLResponse)
+# async def verify_hook(req: Request):
+#     return await webhook_verify(req)
+
+
