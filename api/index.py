@@ -8,15 +8,15 @@ from fastapi.responses import HTMLResponse, PlainTextResponse
 from api.controllers.ai_slackbot import ai_response
 import urllib.parse
 from urllib.parse import parse_qs
-
+from api.models.slack import SlackMessage
 import time
 
 
 app = FastAPI()
 @app.post("/api/ai_response", response_class=PlainTextResponse)
-async def verify_hook(req: Request):
-    data = parse_qs(req.body())
-    text = data.get("text", [""])[0]
+async def verify_hook(message: SlackMessage):
+    # data = parse_qs(req.body())
+    text = message.text
     return ai_response(text)
 
 
