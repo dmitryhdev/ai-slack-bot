@@ -5,7 +5,7 @@ from fastapi.responses import HTMLResponse, PlainTextResponse
 # from api.schema import WebhookVerify
 # from api.verifycode import verify_controller, webhook_verify
 # from api.config import settings
-from controllers.ai_slackbot import ai_response
+from api.controllers.ai_slackbot import ai_response
 import urllib.parse
 
 import time
