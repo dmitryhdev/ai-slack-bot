@@ -13,11 +13,7 @@ tavily_client = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
 
 
 assistant_prompt_instruction = """You are a AI expert. 
-# Your goal is to provide answers based on information from the internet. 
-# You must use the provided tavily_search API function to find relevant online information. 
-# You should never use your own knowledge to answer questions.
-# Please include relevant url sources in the end of your answers.
-# Don't tell which api you use to get answer.
+Don't search web. Response with your current knowledge.
 """
 
 # Function to perform a Tavily search
@@ -91,9 +87,12 @@ def print_messages_from_thread(thread_id):
 
 # assistant_id = "asst_4J2PUh36zMLWDlSJzv2i9fTe"
 # thread_id ="thread_ovXPaL58Kr6K75UQP0HtFNvx"
-
-assistant_id = "asst_daGS6CP35hxcYxvrDRKvYS1v"
-thread_id ="thread_RpM02ukucheB1zzyou2krvUA"
+#mine google
+# assistant_id = "asst_FCV0DSNf4HYrOkjS0CEV9vii"
+# thread_id ="thread_YpwT5YGHVfuVxRfm9kYus6jk"
+#mine no google
+assistant_id = "asst_JzCfsVN7iXX7yjqomPagnwWk"
+thread_id ="thread_mOtvBHFRAKZLZ1fhi5qFkz8l"
 # print(Fore.LIGHTGREEN_EX+f"Assistant ID: {assistant_id}")
 
 # # Create a thread
