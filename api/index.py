@@ -20,9 +20,9 @@ app = FastAPI(timeout=120)
 
 async def send_second_res(url, msg):
     payload = {
-        "text": msg#ai_response(msg)
+        "text": ai_response(msg) + msg
     }
-    await asyncio.sleep(2)
+    # await asyncio.sleep(2)
     # Convert the payload to JSON format
     payload_json = json.dumps(payload)
 
