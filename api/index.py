@@ -40,7 +40,7 @@ async def verify_hook(req: Request, background_tasks: BackgroundTasks):
     print(d)
     response_url = d["response_url"]
     background_tasks.add_task(send_second_res, response_url, d["text"])
-    return "thinking..."
+    return "thinking..." + d["text"]
     
     # data = parse_qs(req.body())
     # text = message.text
