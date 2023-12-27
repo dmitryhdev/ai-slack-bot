@@ -20,9 +20,9 @@ app = FastAPI(timeout=120)
 
 def send_second_res(url, msg):
     payload = {
-        "text": "thinking2"
+        "text": "thinking...."
     }
-
+    payload_json = json.dumps(payload)
     response = requests.post(url, data=payload_json, timeout=120)
 
     payload = {
@@ -46,7 +46,7 @@ async def verify_hook(req: Request, background_tasks: BackgroundTasks):
     print(d)
     response_url = d["response_url"]
     background_tasks.add_task(send_second_res, response_url, d["text"])
-    return "thinking..." + d["text"]
+    # return "thinking..." + d["text"]
     
     # data = parse_qs(req.body())
     # text = message.text
