@@ -25,7 +25,7 @@ def send_second_res(url, msg):
     payload_json = json.dumps(payload)
 
     # Send a POST request to the response_url with the payload
-    response = requests.post(url, data=payload_json)
+    response = requests.post(url, data=payload_json, timeout=120)
 
 
 @app.post("/api/ai_response", response_class=PlainTextResponse)
