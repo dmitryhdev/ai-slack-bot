@@ -13,14 +13,16 @@ from api.models.slack import SlackMessage
 import requests
 import time
 import json
+import asyncio
+
 
 app = FastAPI(timeout=120)
 
-def send_second_res(url, msg):
+async def send_second_res(url, msg):
     payload = {
         "text": "aaa"#ai_response(msg)
     }
-
+    await asyncio.sleep(2)
     # Convert the payload to JSON format
     payload_json = json.dumps(payload)
 
