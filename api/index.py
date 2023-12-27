@@ -18,7 +18,7 @@ import asyncio
 
 app = FastAPI(timeout=120)
 
-async def send_second_res(url, msg):
+def send_second_res(url, msg):
     payload = {
         "text": "thinking2"
     }
