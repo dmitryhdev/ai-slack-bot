@@ -18,7 +18,7 @@ import asyncio
 
 app = FastAPI(timeout=120)
 
-def send_second_res(url, msg):
+async def send_second_res(url, msg):
     payload = {
         "text": "thinking...."
     }
@@ -26,7 +26,7 @@ def send_second_res(url, msg):
     response = requests.post(url, data=payload_json, timeout=120)
 
     payload = {
-        "text": ai_response(msg) + msg
+        "text": await ai_response(msg) + msg
     }
     # await asyncio.sleep(2)
     # Convert the payload to JSON format
@@ -45,7 +45,7 @@ async def verify_hook(req: Request, background_tasks: BackgroundTasks):
     d = {k: v[0] for k, v in d.items()}
     print(d)
     response_url = d["response_url"]
-    # background_tasks.add_task(send_second_res, response_url, d["text"])
+    background_tasks.add_task(send_second_res, response_url, d["text"])
     # return "thinking..." + d["text"]
     
     # data = parse_qs(req.body())

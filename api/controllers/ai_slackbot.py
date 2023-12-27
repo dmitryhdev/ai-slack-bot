@@ -5,6 +5,7 @@ from openai import OpenAI
 from tavily import TavilyClient
 from colorama import Fore
 from dotenv import load_dotenv
+import asyncio
 load_dotenv()
 # Initialize clients with API keys
 client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
@@ -23,9 +24,9 @@ def tavily_search(query):
     return search_result
 
 # Function to wait for a run to complete
-def wait_for_run_completion(thread_id, run_id):
+async def wait_for_run_completion(thread_id, run_id):
     while True:
-        time.sleep(1)
+        asyncio.sleep(0.2)
         run = client.beta.threads.runs.retrieve(thread_id=thread_id, run_id=run_id)
         print(Fore.LIGHTGREEN_EX+f"Current run status: {run.status}")
         if run.status in ['completed', 'failed', 'requires_action']:
@@ -102,7 +103,7 @@ thread_id ="thread_mOtvBHFRAKZLZ1fhi5qFkz8l"
 # Ongoing conversation loop
 
 
-def ai_response(message):
+async def ai_response(message):
     user_input = message
     
     while True:
@@ -121,14 +122,14 @@ def ai_response(message):
         print(Fore.LIGHTGREEN_EX+f"Run ID: {run.id}")
 
         # Wait for run to complete
-        run = wait_for_run_completion(thread_id, run.id)
+        run = await wait_for_run_completion(thread_id, run.id)
 
         if run.status == 'failed':
             print(Fore.LIGHTGREEN_EX+run.error)
             continue
         elif run.status == 'requires_action':
             run = submit_tool_outputs(thread_id, run.id, run.required_action.submit_tool_outputs.tool_calls)
-            run = wait_for_run_completion(thread_id, run.id)
+            run = await wait_for_run_completion(thread_id, run.id)
 
         # Print messages from the thread
         res = print_messages_from_thread(thread_id)
