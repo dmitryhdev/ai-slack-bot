@@ -13,36 +13,32 @@ from api.models.slack import SlackMessage
 import requests
 import time
 import json
-from vercel import Vercel
 
-vercel = Vercel()
 app = FastAPI()
 
 def send_second_res(url, msg):
-    with vercel.operation_timeout(30):
-        payload = {
-            "text": ai_response(msg)
-        }
+    payload = {
+        "text": ai_response(msg)
+    }
 
-        # Convert the payload to JSON format
-        payload_json = json.dumps(payload)
+    # Convert the payload to JSON format
+    payload_json = json.dumps(payload)
 
-        # Send a POST request to the response_url with the payload
-        response = requests.post(url, data=payload_json)
+    # Send a POST request to the response_url with the payload
+    response = requests.post(url, data=payload_json)
 
 
 @app.post("/api/ai_response", response_class=PlainTextResponse)
 # async def verify_hook(slash_command: SlashCommand = Depends()):
 async def verify_hook(req: Request, background_tasks: BackgroundTasks):
-    with vercel.operation_timeout(30):
-        s =await req.body()
-        s= urllib.parse.unquote(s)
-        d = urllib.parse.parse_qs(s)
-        d = {k: v[0] for k, v in d.items()}
-        print(d)
-        response_url = d["response_url"]
-        background_tasks.add_task(send_second_res, response_url, d["text"])
-        return "thinking..."
+    s =await req.body()
+    s= urllib.parse.unquote(s)
+    d = urllib.parse.parse_qs(s)
+    d = {k: v[0] for k, v in d.items()}
+    print(d)
+    response_url = d["response_url"]
+    background_tasks.add_task(send_second_res, response_url, d["text"])
+    return "thinking..."
     
     # data = parse_qs(req.body())
     # text = message.text
