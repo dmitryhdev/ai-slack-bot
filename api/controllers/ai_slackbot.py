@@ -57,50 +57,10 @@ def submit_tool_outputs(thread_id, run_id, tools_to_call):
 def print_messages_from_thread(thread_id):
     messages = client.beta.threads.messages.list(thread_id=thread_id)
     return messages.data[0].content[0].text.value
-    # print(Fore.BLUE + messages.data[0].content[0].text.value)
-    # for msg in messages:
-    #     print(f"{msg.role}: {msg.content[0].text.value}")
 
-# Create an assistant
-# assistant = client.beta.assistants.create(
-#     instructions=assistant_prompt_instruction,
-#     # model="gpt-4-1106-preview",
-#     model="gpt-3.5-turbo-1106",
-#     tools=[{
-#         "type": "function",
-#         "function": {
-#             "name": "tavily_search",
-#             "description": "Get information on recent events from the web.",
-#             "parameters": {
-#                 "type": "object",
-#                 "properties": {
-#                     "query": {"type": "string", "description": "The search query to use. For example: 'Latest news on Nvidia stock performance'"},
-#                 },
-#                 "required": ["query"]
-#             }
-#         }
-#     },
-#     # {"type": "code_interpreter"}
-#     ]
-# )
-# assistant_id = "asst_pnlBriOnH1QKrcT6yigalxJW"
-# thread_id ="thread_jiZvg8hZkBUwhPK2OBxmssxk"
+assistant_id = os.environ["ASSISTANT_ID"]
+thread_id =os.environ["THREAD_ID"]
 
-# assistant_id = "asst_4J2PUh36zMLWDlSJzv2i9fTe"
-# thread_id ="thread_ovXPaL58Kr6K75UQP0HtFNvx"
-#mine google
-# assistant_id = "asst_FCV0DSNf4HYrOkjS0CEV9vii"
-# thread_id ="thread_YpwT5YGHVfuVxRfm9kYus6jk"
-#mine no google
-assistant_id = "asst_JzCfsVN7iXX7yjqomPagnwWk"
-thread_id ="thread_mOtvBHFRAKZLZ1fhi5qFkz8l"
-# print(Fore.LIGHTGREEN_EX+f"Assistant ID: {assistant_id}")
-
-# # Create a thread
-# thread = client.beta.threads.create()
-# print(Fore.LIGHTGREEN_EX+f"Thread: {thread}")
-
-# Ongoing conversation loop
 
 
 async def ai_response(message):
