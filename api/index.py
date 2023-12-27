@@ -14,7 +14,7 @@ import requests
 import time
 import json
 
-app = FastAPI(timeout=60)
+app = FastAPI(timeout=120)
 
 def send_second_res(url, msg):
     payload = {
